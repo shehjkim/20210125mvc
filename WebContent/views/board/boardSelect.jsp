@@ -42,7 +42,7 @@
 		<div>
 			<button type="button" onclick="location.href='/20210125mvc/BoardList.do'">목록보기</button>
 			&nbsp;&nbsp;&nbsp;
-			<button type="button" onclick="location.href='/20210125mvc/BoardDelete.do'">글삭제</button>
+			<button type="button" onclick="location.href='/20210125mvc/BoardDelete.do?row='+ ${vo.boardNo }">글삭제</button>
 
 		</div>
 	</div>
