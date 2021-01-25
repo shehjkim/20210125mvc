@@ -1,6 +1,5 @@
 package co.micol.mvc.board.dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +17,8 @@ public class BoardsDAO extends DAO{
 		private final String BOARDSELECTLIST = "SELECT * FROM boards ORDER BY board_no desc";		//c콜?
 		private final String BOARDSELECT = "SELECT * FROM boards WHERE board_no=?";
 		private final String BOARDINSERT = "INSERT INTO boards VALUES (?,?,?,?,?)";
-//조회	
+		private final String BOARDDELETE = "DELETE FROM boards WHERE board_no=?";
+		//조회	
 		
 		public ArrayList<BoardVO> selectList() { 						//selectList (전체 리스트를 가져옴)
 				ArrayList<BoardVO> list = new ArrayList<BoardVO>();
@@ -91,15 +91,23 @@ public class BoardsDAO extends DAO{
 //수정		
 		public int update(BoardVO vo) {
 			int n=0;
-			//여기에 수정작업을 쓴다
+			
 			return n;
 			
 		}
 //삭제
-
 		public int delete(BoardVO vo) {
 			int n=0;
-			//여기에 삭제작업을 쓴다
+			try {
+				psmt = conn.prepareStatement(BOARDDELETE);
+				psmt.setInt(1, vo.getBoardNo());
+				rs = psmt.executeQuery();
+				System.out.println(n + " 건 삭제되었습니다.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
 			return n;
 			
 		}

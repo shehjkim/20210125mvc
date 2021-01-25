@@ -39,7 +39,6 @@
 
 			</table>
 		</div>
-		</br>
 		<div>
 			<button type="button" onclick="location.href='views/board/boardInputform.jsp'">새글쓰기</button>
 		</div>

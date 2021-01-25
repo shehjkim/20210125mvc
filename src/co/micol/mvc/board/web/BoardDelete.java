@@ -1,7 +1,6 @@
 package co.micol.mvc.board.web;
 
 import java.io.IOException;
-import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,49 +13,37 @@ import co.micol.mvc.board.dao.BoardsDAO;
 import co.micol.mvc.board.service.BoardVO;
 
 
-@WebServlet("/Boardinput.do")
-public class Boardinput extends HttpServlet {
+@WebServlet("/BoardDelete.do")
+public class BoardDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
        
 
-    public Boardinput() {
+    public BoardDelete() {
         super();
 
     }
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.setCharacterEncoding("UTF-8");
 			BoardsDAO dao = new BoardsDAO();
 			BoardVO vo = new BoardVO();
-			vo.setBoardNo(Integer.parseInt(request.getParameter("boardNo"))); //boardInputform.jsp의 각각의 id와 name
-			vo.setTitle(request.getParameter("title"));
-			vo.setContent(request.getParameter("content"));
-			vo.setWriter(request.getParameter("writer"));
-			vo.setCreationDate(Date.valueOf(request.getParameter("creationDate")));
-
-			String viewPage = null;
-			int n = dao.insert(vo);
 			
-			if(n != 0) {	
-				viewPage = "BoardList.do";
-			}else {				//실패시
-				String message="입력한 내용이 DB에 저장하지 못하였습니다. ";
-				request.setAttribute("mag", message);
-				viewPage = "views/board/jsp/boardInputFail.jsp";
+			vo.setBoardNo(Integer.parseInt(request.getParameter("row")));
+			int n = dao.delete(vo);			//n을 쓰던안쓰던 integer로 받아야되기때문에 선언
+			String viewPage= null;
+			
+			//돌려줄 페이지 , n을 사용해야 오류가 없기때문에 if 구문으로 지정
+			if(n != 0) {
+				viewPage="BoardList.do";
 			}
-			
+						
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
-	
-	
-	
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	
 		doGet(request, response);
 	}
 
