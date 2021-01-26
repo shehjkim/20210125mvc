@@ -18,8 +18,10 @@ public class BoardsDAO extends DAO{
 		private final String BOARDSELECT = "SELECT * FROM boards WHERE board_no=?";
 		private final String BOARDINSERT = "INSERT INTO boards VALUES (?,?,?,?,?)";
 		private final String BOARDDELETE = "DELETE FROM boards WHERE board_no=?";
-		//조회	
+		private final String BOARDUPDATE = "UPDATE boards SET title=? , content= ?  WHERE board_no=?";
+
 		
+//조회	
 		public ArrayList<BoardVO> selectList() { 						//selectList (전체 리스트를 가져옴)
 				ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 				BoardVO vo; //vo 객체를 만듬
@@ -44,6 +46,7 @@ public class BoardsDAO extends DAO{
 							
 				return list;
 		}
+		
 //한가지 조회		
 		public BoardVO select(BoardVO vo) {
 			//한개레코드 조회 구문 작성
@@ -58,7 +61,7 @@ public class BoardsDAO extends DAO{
 					vo.setWriter(rs.getString("writer"));
 					vo.setCreationDate(rs.getDate("creation_date"));
 				}
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
 				close();
@@ -78,7 +81,7 @@ public class BoardsDAO extends DAO{
 				psmt.setDate(5,vo.getCreationDate());
 				n = psmt.executeUpdate();
 				System.out.println(n + " 건 입력되었습니다.");
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
 				close();
@@ -91,6 +94,18 @@ public class BoardsDAO extends DAO{
 //수정		
 		public int update(BoardVO vo) {
 			int n=0;
+			try {
+				psmt = conn.prepareStatement(BOARDUPDATE);
+				psmt.setString(1, vo.getTitle());
+				psmt.setString(2, vo.getContent());
+				psmt.setInt(3, vo.getBoardNo());
+				n = psmt.executeUpdate();
+				System.out.println(n + "건 수정 되었습니다. ");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close();
+			}
 			
 			return n;
 			
@@ -101,9 +116,9 @@ public class BoardsDAO extends DAO{
 			try {
 				psmt = conn.prepareStatement(BOARDDELETE);
 				psmt.setInt(1, vo.getBoardNo());
-				rs = psmt.executeQuery();
+				n = psmt.executeUpdate();
 				System.out.println(n + " 건 삭제되었습니다.");
-			} catch (Exception e) {
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally {
 				close();

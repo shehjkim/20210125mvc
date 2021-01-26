@@ -7,7 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div align="center">
 <jsp:include page="/views/common/menu.jsp"></jsp:include>
 <h1>시작하는 곳</h1>
+</div>
 </body>
 </html>

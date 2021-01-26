@@ -27,13 +27,13 @@
 					<th width="100">작성자</th>
 					<th width="100">작성일</th>
 				</tr>
-				<c:forEach var="BoardVO" items="${list }">
+				<c:forEach var="vo" items="${list }">
 					<tr class="row"
-						onclick="location.href='/20210125mvc/BoarderRowSelect.do?row='+${BoardVO.boardNo }">
-						<td align="center">${BoardVO.boardNo }</td>
-						<td>&nbsp;${BoardVO.title }</td>
-						<td align="center">${BoardVO.writer }</td>
-						<td align="center">${BoardVO.creationDate }</td>
+						onclick="location.href='/20210125mvc/BoarderRowSelect.do?row='+${vo.boardNo }">
+						<td align="center">${vo.boardNo }</td>
+						<td>&nbsp;${vo.title }</td>
+						<td align="center">${vo.writer }</td>
+						<td align="center">${vo.creationDate }</td>
 					</tr>
 				</c:forEach>
 

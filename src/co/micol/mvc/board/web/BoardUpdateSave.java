@@ -13,36 +13,38 @@ import co.micol.mvc.board.dao.BoardsDAO;
 import co.micol.mvc.board.service.BoardVO;
 
 
-@WebServlet("/BoardDelete.do")
-public class BoardDelete extends HttpServlet {
+@WebServlet("/BoardUpdateSave.do")
+public class BoardUpdateSave extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public BoardDelete() {
+    public BoardUpdateSave() {
         super();
 
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			request.setCharacterEncoding("UTF-8");
-			BoardsDAO dao = new BoardsDAO();
-			BoardVO vo = new BoardVO();
-			
-			vo.setBoardNo(Integer.parseInt(request.getParameter("row")));
-			
-			int n = dao.delete(vo);			//n을 쓰던안쓰던 integer로 받아야되기때문에 선언
-			String viewPage= null;
-			
-											//돌려줄 페이지 , n을 사용해야 오류가 없기때문에 if 구문으로 지정
-			if(n != 0) viewPage="BoardList.do";
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-			dispatcher.forward(request, response);
+				request.setCharacterEncoding("UTF-8");
+				BoardsDAO dao = new BoardsDAO();
+				BoardVO vo = new BoardVO();
+				
+				vo.setBoardNo(Integer.parseInt(request.getParameter("no")));
+				vo.setTitle(request.getParameter("title"));
+				vo.setContent(request.getParameter("content"));
+				
+				int n = dao.update(vo);
+				String viewPage = null;
+				
+				if (n !=0 ) viewPage ="BoardList.do";
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+				dispatcher.forward(request, response);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
 		doGet(request, response);
 	}
 
